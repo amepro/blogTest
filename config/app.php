@@ -226,6 +226,7 @@ return [
         'URL' => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
+        'Gravatar' => Creativeorange\Gravatar\Facades\Gravatar::class,
 
     ],
 
@@ -237,5 +238,15 @@ return [
     'nbrPages' => [
         'posts' => 6,
     ],
+
+
+    /*
+|--------------------------------------------------------------------------
+| SEO
+|--------------------------------------------------------------------------
+*/
+
+    'description' => 'The best blog in the world',
+    'author' => 'The best author',
 
 ];
