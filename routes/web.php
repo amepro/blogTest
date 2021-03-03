@@ -8,32 +8,13 @@ use App\Http\Controllers\Front\{
     ContactController as FrontContactController,
     PageController as FrontPageController
 };
-
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
-*/
-
-//Route::get('/', function () {
-//    return view('welcome');
-//});
-
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth'])->name('dashboard');
-
+use App\Http\Controllers\Back\AdminController;
 
 Route::group(['prefix' => 'laravel-filemanager', 'middleware' => 'auth'], function () {
     Lfm::routes();
 });
 
-
+// Home
 Route::name('home')->get('/', [FrontPostController::class, 'index']);
 Route::name('category')->get('category/{category:slug}', [FrontPostController::class, 'category']);
 Route::name('author')->get('author/{user}', [FrontPostController::class, 'user']);
@@ -46,10 +27,32 @@ Route::prefix('posts')->group(function () {
     Route::name('posts.comments')->get('{post}/comments', [FrontCommentController::class, 'comments']);
     Route::name('posts.comments.store')->post('{post}/comments', [FrontCommentController::class, 'store'])->middleware('auth');
 });
-
 Route::name('front.comments.destroy')->delete('comments/{comment}', [FrontCommentController::class, 'destroy']);
 
 // Contact
 Route::resource('contacts', FrontContactController::class, ['only' => ['create', 'store']]);
 
+Route::get('/dashboard', function () {
+    return view('dashboard');
+})->middleware(['auth'])->name('dashboard');
+
 require __DIR__.'/auth.php';
+
+//Route::view('admin', 'back.layout');
+
+/*
+|--------------------------------------------------------------------------
+| Backend
+|--------------------------------------------------------------------------|
+*/
+
+Route::prefix('admin')->group(function () {
+
+    Route::middleware('redac')->group(function () {
+
+        // Dashboard
+        Route::name('admin')->get('/', [AdminController::class, 'index']);
+        // Purge
+        Route::name('purge')->put('purge/{model}', [AdminController::class, 'purge']);
+    });
+});
