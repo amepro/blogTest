@@ -25,6 +25,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        setlocale(LC_TIME, config('app.locale'));
+
         View::composer(['front.layout', 'front.index'], HomeComposer::class);
 
         View::composer('back.layout', function ($view) {

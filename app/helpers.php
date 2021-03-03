@@ -23,6 +23,13 @@ if (!function_exists('formatDate')) {
     }
 }
 
+if (!function_exists('formatHour')) {
+    function formatHour($date)
+    {
+        return ucfirst(utf8_encode ($date->formatLocalized('%Hh%M')));
+    }
+}
+
 if (!function_exists('currentRouteActive')) {
     function currentRouteActive(...$routes)
     {
