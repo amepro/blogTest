@@ -41,7 +41,10 @@ Route::prefix('posts')->group(function () {
     Route::name('posts.display')->get('{slug}', [FrontPostController::class, 'show']);
     Route::name('posts.search')->get('', [FrontPostController::class, 'search']);
     Route::name('posts.comments')->get('{post}/comments', [FrontCommentController::class, 'comments']);
+    Route::name('posts.comments.store')->post('{post}/comments', [FrontCommentController::class, 'store'])->middleware('auth');
 });
+
+Route::name('front.comments.destroy')->delete('comments/{comment}', [FrontCommentController::class, 'destroy']);
 
 
 require __DIR__.'/auth.php';
