@@ -10,7 +10,8 @@ use App\Http\Controllers\Front\{
 };
 use App\Http\Controllers\Back\{
     AdminController,
-    PostController as BackPostController
+    PostController as BackPostController,
+    ResourceController as BackResourceController
 };
 
 Route::group(['prefix' => 'laravel-filemanager', 'middleware' => 'auth'], function () {
@@ -66,5 +67,7 @@ Route::prefix('admin')->group(function () {
 
         // Posts
         Route::name('posts.indexnew')->get('newposts', [BackPostController::class, 'index']);
+        // Categories
+        Route::resource('categories', BackResourceController::class)->except(['show']);
     });
 });
