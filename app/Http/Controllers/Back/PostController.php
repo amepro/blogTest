@@ -13,6 +13,16 @@ use App\DataTables\PostsDataTable;
 class PostController extends Controller
 {
     /**
+     * Create the controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->authorizeResource(Post::class, 'post');
+    }
+
+    /**
      * Display a listing of the posts.
      *
      * @param  \App\DataTables\PostsDataTable  $dataTable
@@ -64,26 +74,31 @@ class PostController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
+     * Show the form for editing the specified post.
      *
      * @param  \App\Models\Post  $post
      * @return \Illuminate\Http\Response
      */
     public function edit(Post $post)
     {
-        //
+        $categories = Category::all()->pluck('title', 'id');
+
+        return view('back.posts.form', compact('post', 'categories'));
     }
 
     /**
-     * Update the specified resource in storage.
+     * Update the specified post in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Http\Requests\Back\PostRequest  $request
+     * @param  \App\Repositories\PostRepository $repository
      * @param  \App\Models\Post  $post
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Post $post)
+    public function update(PostRequest $request, PostRepository $repository, Post $post)
     {
-        //
+        $repository->update($post, $request);
+
+        return back()->with('ok', __('The post has been successfully updated'));
     }
 
     /**
@@ -94,6 +109,8 @@ class PostController extends Controller
      */
     public function destroy(Post $post)
     {
-        //
+        $post->delete();
+
+        return response()->json();
     }
 }

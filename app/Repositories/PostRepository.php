@@ -220,4 +220,15 @@ class PostRepository
 
         $post->tags()->sync($tags_id);
     }
+
+
+    public function update($post, $request)
+    {
+        $request->merge([
+            'active' => $request->has('active'),
+            'image' => basename($request->image),
+        ]);
+        $post->update($request->all());
+        $this->saveCategoriesAndTags($post, $request);
+    }
 }
