@@ -28,4 +28,32 @@ class UserController extends ResourceController
 
         return back()->with('ok', __('The user has been successfully updated'));
     }
+
+    /**
+     * Valid the user.
+     *
+     * @param  \App\Models\User  $user
+     * @return \Illuminate\Http\Response
+     */
+    public function valid(User $user)
+    {
+        $user->valid = true;
+        $user->save();
+
+        return response()->json();
+    }
+
+    /**
+     * Unvalid the user.
+     *
+     * @param  \App\Models\User  $user
+     * @return \Illuminate\Http\Response
+     */
+    public function unvalid(User $user)
+    {
+        $user->valid = false;
+        $user->save();
+
+        return response()->json();
+    }
 }
