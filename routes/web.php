@@ -14,9 +14,16 @@ use App\Http\Controllers\Back\{
     ResourceController as BackResourceController,
     UserController as BackUserController
 };
+use App\Http\Controllers\Auth\RegisteredUserController;
 
 Route::group(['prefix' => 'laravel-filemanager', 'middleware' => 'auth'], function () {
     Lfm::routes();
+});
+
+// Profile
+Route::middleware(['auth', 'password.confirm'])->group(function () {
+    Route::view('profile', 'auth.profile');
+    Route::name('profile')->put('profile', [RegisteredUserController::class, 'update']);
 });
 
 // Home

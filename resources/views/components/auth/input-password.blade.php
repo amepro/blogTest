@@ -5,6 +5,6 @@
         class="h-full-width"
         type="password"
         name="password"
-        placeholder="@lang('Your password')"
+        placeholder="@lang('Your Password')"
         required>
 </div>
