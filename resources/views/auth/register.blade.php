@@ -43,10 +43,17 @@
                         required>
                 </div>
 
+                <!-- RGPD -->
+                <x-auth.rgpd-checkbox />
+
                 <x-auth.submit title="Register" />
 
             </form>
         </div>
     </div>
 
+@endsection
+
+@section('scripts')
+    <x-auth.rgpd-script />
 @endsection

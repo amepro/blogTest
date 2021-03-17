@@ -75,4 +75,17 @@ class RegisteredUserController extends Controller
 
         return back()->with('status', __('You have been successfully updated.'));
     }
+
+    /**
+     * Delete the authenticated user.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy(Request $request)
+    {
+        $request->user()->delete();
+
+        return response()->json();
+    }
 }

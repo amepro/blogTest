@@ -2,6 +2,8 @@
 
 @section('main')
 
+    <!-- content
+    ================================================== -->
     <div class="row">
         <div class="column large-12">
 
@@ -46,6 +48,11 @@
                             <textarea name="message" id="message" class="h-full-width" placeholder="@lang('Your Message')" required>{{ old('message') }}</textarea>
 
                             <br>
+
+                            @if(Auth::guest())
+                                <x-auth.rgpd-checkbox />
+                            @endif
+
                             <x-auth.submit title="Send" />
 
                         </fieldset>
@@ -58,4 +65,10 @@
         </div>
     </div>
 
+@endsection
+
+@section('scripts')
+    @if(Auth::guest())
+        <x-auth.rgpd-script />
+    @endif
 @endsection
